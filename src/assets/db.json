@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Pratik",
+      "age": "23",
+      "gender": "Male"
+    },
+    {
+      "id": 2,
+      "name": "Hiren",
+      "age": "23",
+      "gender": "Male"
+    },
+    {
+      "id": 3,
+      "name": "Harshiv",
+      "age": "23",
+      "gender": "Male"
+    },
+    {
+      "id": 4,
+      "name": "Mitul",
+      "age": "23",
+      "gender": "Male"
+    }
+  ]
+}

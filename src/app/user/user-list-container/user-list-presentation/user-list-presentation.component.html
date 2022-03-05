@@ -1,0 +1,30 @@
+<div class="pb-5">
+  <h2>List of Users</h2>
+  <div class="position-relative">
+    <button class="btn btn-dark position-absolute top-0 end-0">+ Add</button>
+  </div>
+</div>
+
+<table class="table caption-top border">
+  <thead>
+    <tr>
+      <th scope="col">User Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="align-middle" *ngFor="let item of userList">
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.age }}</td>
+      <td>{{ item.gender }}</td>
+      <td>
+        <button class="btn btn-primary me-2">Edit</button>
+        <button class="btn btn-danger">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
