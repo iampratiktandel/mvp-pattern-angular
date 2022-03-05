@@ -18,4 +18,13 @@ export class UserService {
     let url = 'http://localhost:3000/users';
     return this.http.get<User[]>(url);
   }
+
+  /**
+   * api to delete user
+   * @param id user id
+   */
+   deleteUser(id: number) {
+    let url = `http://localhost:3000/users/${id}`;
+    return this.http.delete(url);
+  }
 }

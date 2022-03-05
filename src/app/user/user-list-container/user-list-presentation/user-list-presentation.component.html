@@ -23,7 +23,7 @@
       <td>{{ item.gender }}</td>
       <td>
         <button class="btn btn-primary me-2">Edit</button>
-        <button class="btn btn-danger">Delete</button>
+        <button class="btn btn-danger" (click)="onDelete(item.id)">Delete</button>
       </td>
     </tr>
   </tbody>

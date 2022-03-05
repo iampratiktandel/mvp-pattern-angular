@@ -1,5 +1,8 @@
 <div class="container-fluid p-4">
   <div>
-    <app-user-list-presentation [userList]="userList$ | async"></app-user-list-presentation>
+    <app-user-list-presentation 
+      [userList]="userList$ | async"
+      (deleteUser)="deleteUser($event)"
+    ></app-user-list-presentation>
   </div>
 </div>

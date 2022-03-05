@@ -23,4 +23,11 @@ export class UserListContainerComponent implements OnInit {
     this.userList$ = this.userService.getUsers();
   }
 
+  public deleteUser(id: number) {
+    this.userService.deleteUser(id).subscribe(
+      (res) => {
+        alert('User Deleted Successfully');
+      }
+    )
+  }
 }
