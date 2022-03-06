@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User, UserForm } from '../user.model';
+import { User, UserEditDetails, UserForm } from '../user.model';
 import { UserService } from '../user.service';
 
 @Component({
@@ -35,6 +35,14 @@ export class UserContainerComponent implements OnInit {
     this.userService.addUser(data).subscribe(
       (res) => {
         alert('User Added Successfully')
+      }
+    )
+  }
+
+  public editUser(data: UserEditDetails) {
+    this.userService.editUser(data.userForm, data.id).subscribe(
+      (res) => {
+        alert('User Edited Successfully')
       }
     )
   }

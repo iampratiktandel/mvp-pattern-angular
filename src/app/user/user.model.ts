@@ -32,3 +32,16 @@ export class UserForm {
     this.gender = gender;
   }
 }
+
+/** User Edit Details Model */
+export class UserEditDetails {
+  public userForm: UserForm;
+  public id: number;
+  constructor(
+    userForm: UserForm,
+    id: number
+  ) {
+    this.userForm = userForm;
+    this.id = id;
+  }
+}

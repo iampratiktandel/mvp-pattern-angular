@@ -36,4 +36,14 @@ export class UserService {
     let url = 'http://localhost:3000/users';
     return this.http.post<any>(url, postObj);
   }
+
+  /**
+   * api to edit user
+   * @param postObj object to post on server
+   * @param id user id
+   */
+   editUser(postObj: UserForm, id: number): Observable<any> {
+    let url = `http://localhost:3000/users/${id}`;
+    return this.http.put<any>(url, postObj);
+  }
 }

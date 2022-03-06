@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="form-modal rounded p-3">
     <div class="d-flex justify-content-between">
-      <h2 class="text-center">Add User</h2>
+      <h2 class="text-center">{{ formTitle }}</h2>
       <a (click)="onCancel()" class="text-decoration-none">&times;</a>
     </div>
     <form [formGroup]="userForm">
