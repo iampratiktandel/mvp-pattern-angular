@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../user.model';
+import { User, UserForm } from '../user.model';
 import { UserService } from '../user.service';
 
 @Component({
-  selector: 'app-user-list-container',
-  templateUrl: './user-list-container.component.html',
-  styleUrls: ['./user-list-container.component.css']
+  selector: 'app-user-container',
+  templateUrl: './user-container.component.html',
+  styleUrls: ['./user-container.component.css']
 })
-export class UserListContainerComponent implements OnInit {
+export class UserContainerComponent implements OnInit {
 
   /** user list data */
   public userList$: Observable<User[]>
@@ -27,6 +27,14 @@ export class UserListContainerComponent implements OnInit {
     this.userService.deleteUser(id).subscribe(
       (res) => {
         alert('User Deleted Successfully');
+      }
+    )
+  }
+
+  public addUser(data: UserForm) {
+    this.userService.addUser(data).subscribe(
+      (res) => {
+        alert('User Added Successfully')
       }
     )
   }

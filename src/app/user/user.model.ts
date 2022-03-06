@@ -16,3 +16,19 @@ export class User {
     this.gender = gender;
   }
 }
+
+/** User Form Model */
+export class UserForm {
+  public name: string;
+  public age: string;
+  public gender: string;
+  constructor(
+    name: string,
+    age: string,
+    gender: string
+  ) {
+    this.name = name;
+    this.age = age;
+    this.gender = gender;
+  }
+}

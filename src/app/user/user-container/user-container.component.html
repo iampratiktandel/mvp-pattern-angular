@@ -3,6 +3,7 @@
     <app-user-list-presentation 
       [userList]="userList$ | async"
       (deleteUser)="deleteUser($event)"
+      (addUser)="addUser($event)"
     ></app-user-list-presentation>
   </div>
 </div>

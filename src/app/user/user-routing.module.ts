@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserListContainerComponent } from './user-list-container/user-list-container.component';
+import { UserContainerComponent } from './user-container/user-container.component';
 import { UserComponent } from './user.component';
 
 const routes: Routes = [
@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: 'list',
-        component: UserListContainerComponent
+        component: UserContainerComponent
       },
       {
         path: '',

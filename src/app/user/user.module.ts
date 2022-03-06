@@ -4,21 +4,26 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user.component';
-import { UserListContainerComponent } from './user-list-container/user-list-container.component';
-import { UserListPresentationComponent } from './user-list-container/user-list-presentation/user-list-presentation.component';
+import { UserListPresentationComponent } from './user-container/user-list-presentation/user-list-presentation.component';
 import { UserService } from './user.service';
-
+import { UserContainerComponent } from './user-container/user-container.component';
+import { UserFormPresentationComponent } from './user-container/user-form-presentation/user-form-presentation.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     UserComponent,
-    UserListContainerComponent,
-    UserListPresentationComponent
+    UserContainerComponent,
+    UserListPresentationComponent,
+    UserFormPresentationComponent
   ],
   imports: [
     CommonModule,
     UserRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    OverlayModule,
+    ReactiveFormsModule
   ],
   providers: [
     UserService
