@@ -65,6 +65,9 @@ export class UserFormPresentationComponent implements OnInit {
   /** on submit button click */
   public onSubmit() {
     this.isFormSubmitted = true;
+    this.userForm.value.name = this.userForm.value.name.trim();
+    console.log(this.userForm.value)
+
     this.userFormPresenterService.onFormSubmit(this.userForm);
   }
 

@@ -1,7 +1,9 @@
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { ChangeDetectionStrategy, Component, ComponentRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { take } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, ComponentRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 import { User, UserEditDetails, UserForm } from '../../user.model';
 import { UserFormPresentationComponent } from '../user-form-presentation/user-form-presentation.component';
 import { UserListPresenterService } from '../user-list-presenter/user-list-presenter.service';
@@ -14,12 +16,13 @@ import { UserListPresenterService } from '../user-list-presenter/user-list-prese
   viewProviders: [UserListPresenterService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserListPresentationComponent implements OnInit {
+export class UserListPresentationComponent implements OnInit, OnDestroy {
 
   /** setter for user list */
   @Input() public set userList(value: User[] | null) {
     if (value) {
       this._userList = value;
+      this.tempUserList = value;
     }
   }
   public get userList(): User[] | null {
@@ -33,10 +36,16 @@ export class UserListPresentationComponent implements OnInit {
   /** emitter to emit edit user details */
   @Output() public editUser: EventEmitter<UserEditDetails>;
 
+  /** temp user list for displaying in table */
+  public tempUserList!: User[];
   /** user id */
   public userId!: number;
+  /** search field control object */
+  public search: FormControl;
 
   private _userList: User[];
+  /** to destroy the subscriptions  */
+  private destroy: Subject<void>;
 
   constructor(
     private userListPresenterService: UserListPresenterService,
@@ -46,12 +55,23 @@ export class UserListPresentationComponent implements OnInit {
     this.deleteUser = new EventEmitter();
     this.addUser = new EventEmitter();
     this.editUser = new EventEmitter();
+    this.search = new FormControl();
+    this.destroy = new Subject();
   }
 
   ngOnInit(): void {
     this.userListPresenterService.userId$.subscribe((id: number) => {
       this.deleteUser.emit(id);
     })
+
+    this.search.valueChanges.pipe(takeUntil(this.destroy)).subscribe((searchTerm) => {
+      this.searchUser(searchTerm);
+    })
+  }
+
+  /** search user by search term */
+  public searchUser(searchTerm: string): void{
+    this.tempUserList = this.userListPresenterService.getFilteredList(this._userList, searchTerm.toLowerCase().trim());
   }
 
   /** on delete button click */
@@ -105,5 +125,10 @@ export class UserListPresentationComponent implements OnInit {
     componentRef.instance.editUser.subscribe((res: UserForm) => {
       this.editUser.emit({userForm: res, id: this.userId});
     })
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy.next();
+    this.destroy.unsubscribe();
   }
 }
