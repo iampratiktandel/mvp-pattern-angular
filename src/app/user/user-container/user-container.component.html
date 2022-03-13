@@ -2,7 +2,7 @@
   <div>
     <app-user-list-presentation 
       [userList]="userList$ | async"
-      (deleteUser)="deleteUser($event)"
+      (delete)="deleteUser($event)"
       (addUser)="addUser($event)"
       (editUser)="editUser($event)"
     ></app-user-list-presentation>

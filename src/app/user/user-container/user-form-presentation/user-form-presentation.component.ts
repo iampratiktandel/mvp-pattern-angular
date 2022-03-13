@@ -27,9 +27,9 @@ export class UserFormPresentationComponent implements OnInit {
   /** emitter to emit cancel event */
   @Output() public cancel: EventEmitter<Date>;
   /** emitter to emit add user data */
-  @Output() public addUser: EventEmitter<UserForm>;
+  @Output() public add: EventEmitter<UserForm>;
   /** emitter to emit edit user data */
-  @Output() public editUser: EventEmitter<UserForm>;
+  @Output() public edit: EventEmitter<UserForm>;
   
   /** ttile of form */
   public formTitle: string;
@@ -45,8 +45,8 @@ export class UserFormPresentationComponent implements OnInit {
     private userFormPresenterService: UserFormPresenterService
   ) { 
     this.cancel = new EventEmitter();
-    this.addUser = new EventEmitter();
-    this.editUser = new EventEmitter();
+    this.add = new EventEmitter();
+    this.edit = new EventEmitter();
     this.formTitle = 'Add User';
     this.userForm = this.userFormPresenterService.buildForm();
     this.isFormSubmitted = false;
@@ -55,9 +55,9 @@ export class UserFormPresentationComponent implements OnInit {
   ngOnInit(): void {
     this.userFormPresenterService.userFormData$.subscribe((res: UserForm)=> {
       if (this.formTitle === 'Add User') {
-        this.addUser.emit(res);
+        this.add.emit(res);
       } else {
-        this.editUser.emit(res);
+        this.edit.emit(res);
       }
     })
   }

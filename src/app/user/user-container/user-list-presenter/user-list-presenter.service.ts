@@ -5,18 +5,18 @@ import { User } from '../../user.model';
 @Injectable()
 export class UserListPresenterService {
 
-  public userId: Subject<number>;
-  public userId$: Observable<number>;
+  private delete: Subject<number>;
+  public delete$: Observable<number>;
 
   constructor() { 
-    this.userId = new Subject();
-    this.userId$ = new Observable();
+    this.delete = new Subject();
+    this.delete$ = new Observable();
 
-    this.userId$ = this.userId.asObservable();
+    this.delete$ = this.delete.asObservable();
   }
 
   public deleteUser(id: number) {
-    this.userId.next(id);
+    this.delete.next(id);
   }
 
   /**

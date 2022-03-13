@@ -30,7 +30,7 @@ export class UserListPresentationComponent implements OnInit, OnDestroy {
   }
 
   /** emits user id to be deleted */
-  @Output() public deleteUser: EventEmitter<number>;
+  @Output() public delete: EventEmitter<number>;
   /** emitter to emit add user data */
   @Output() public addUser: EventEmitter<UserForm>;
   /** emitter to emit edit user details */
@@ -52,7 +52,7 @@ export class UserListPresentationComponent implements OnInit, OnDestroy {
     private overlay: Overlay
   ) {
     this._userList = [];
-    this.deleteUser = new EventEmitter();
+    this.delete = new EventEmitter();
     this.addUser = new EventEmitter();
     this.editUser = new EventEmitter();
     this.search = new FormControl();
@@ -60,8 +60,8 @@ export class UserListPresentationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userListPresenterService.userId$.subscribe((id: number) => {
-      this.deleteUser.emit(id);
+    this.userListPresenterService.delete$.subscribe((id: number) => {
+      this.delete.emit(id);
     })
 
     this.search.valueChanges.pipe(takeUntil(this.destroy)).subscribe((searchTerm) => {
@@ -118,11 +118,11 @@ export class UserListPresentationComponent implements OnInit, OnDestroy {
       overlayRef.detach();
     })
     // listen to add user event
-    componentRef.instance.addUser.subscribe((res: UserForm) => {
+    componentRef.instance.add.subscribe((res: UserForm) => {
       this.addUser.emit(res);
     })
     // listen to edit user event
-    componentRef.instance.editUser.subscribe((res: UserForm) => {
+    componentRef.instance.edit.subscribe((res: UserForm) => {
       this.editUser.emit({userForm: res, id: this.userId});
     })
   }
