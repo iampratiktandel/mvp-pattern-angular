@@ -26,6 +26,22 @@
         <button class="btn btn-primary me-2" (click)="onEdit(item)">Edit</button>
         <button class="btn btn-danger" (click)="onDelete(item.id)">Delete</button>
       </td>
+      <td>
+        <button class="btn btn-primary me-2" (click)="onEdit(item)">Graph</button>
+        <button class="btn btn-danger" (click)="onDelete(item.id)">Table</button>
+      </td>
     </tr>
   </tbody>
 </table>
+
+<div>
+  <button class="btn btn-primary me-2" (click)="tabChange(1)" [routerLink]="['./']" [queryParams]="{view: 'graph'}">Graph</button>
+  <button class="btn btn-danger me-2" (click)="tabChange(2)" [routerLink]="['./']" [queryParams]="{view: 'table'}">Table</button>
+  <button class="btn btn-info" (click)="onBack()">Back</button>
+  <div *ngIf="isGraph">
+    <h6>Graph</h6>
+  </div>
+  <div *ngIf="!isGraph">
+    <h6>Table</h6>
+  </div>
+</div>

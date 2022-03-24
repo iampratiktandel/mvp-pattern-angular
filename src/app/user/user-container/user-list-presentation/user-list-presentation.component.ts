@@ -1,7 +1,8 @@
 import { Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { ChangeDetectionStrategy, Component, ComponentRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { User, UserEditDetails, UserForm } from '../../user.model';
@@ -43,13 +44,20 @@ export class UserListPresentationComponent implements OnInit, OnDestroy {
   /** search field control object */
   public search: FormControl;
 
+  public isGraph: boolean;
+  public tabCount: number;
+  public tabIndex: number;
+
   private _userList: User[];
   /** to destroy the subscriptions  */
   private destroy: Subject<void>;
 
   constructor(
     private userListPresenterService: UserListPresenterService,
-    private overlay: Overlay
+    private overlay: Overlay,
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {
     this._userList = [];
     this.delete = new EventEmitter();
@@ -57,6 +65,9 @@ export class UserListPresentationComponent implements OnInit, OnDestroy {
     this.editUser = new EventEmitter();
     this.search = new FormControl();
     this.destroy = new Subject();
+    this.isGraph = true;
+    this.tabCount = 0;
+    this.tabIndex = 1;
   }
 
   ngOnInit(): void {
@@ -67,6 +78,35 @@ export class UserListPresentationComponent implements OnInit, OnDestroy {
     this.search.valueChanges.pipe(takeUntil(this.destroy)).subscribe((searchTerm) => {
       this.searchUser(searchTerm);
     })
+
+    this.activatedRoute.queryParams.subscribe((queryParams: Params) => {
+      const view = queryParams.view
+      this.isGraph = view === 'table' ? false : true;
+      this.cdr.detectChanges();
+    })
+  }
+
+  tabChange(index: number) {
+    if (this.tabIndex !== index) {
+      this.tabCount++;
+    }
+    this.tabIndex = index;
+  }
+
+  onBack() {
+    // this.location.back();
+    // this.location.historyGo(-1);
+
+    if (this.tabCount === 0) {
+      this.router.navigate(['dashboard']);
+    } else {
+      const currentView = this.activatedRoute.snapshot.queryParams.view;
+      currentView === 'table'
+      ? this.router.navigate(['user/list'], { queryParams: { view : 'graph'} })
+      : this.router.navigate(['user/list'], { queryParams: { view : 'table'} });
+      this.tabCount--;
+    }
+    console.log(this.tabCount);
   }
 
   /** search user by search term */
